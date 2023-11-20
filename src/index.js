@@ -11,6 +11,7 @@ let sortAlgo;
 
 const BUBBLE_SORT_ALGORITHM = "Bubble";
 const SELECTION_SORT_ALGORITHM = "Selection";
+const INSERTION_SORT_ALGORITHM = "Insertion";
 
 // sorting_algorithms = {
 //     BUBBLE_SORT_ALGORITHM: BubbleSort
@@ -49,6 +50,7 @@ function setup() {
     algorithmSelect = createSelect();
     algorithmSelect.option(BUBBLE_SORT_ALGORITHM);
     algorithmSelect.option(SELECTION_SORT_ALGORITHM);
+    algorithmSelect.option(INSERTION_SORT_ALGORITHM);
     algorithmSelect.style('width', '150px');
     algorithmSelect.selected(BUBBLE_SORT_ALGORITHM);
     algorithmSelect.changed(reset);
@@ -108,6 +110,8 @@ function getSortAlgorithm(key, rectangles) {
         return new BubbleSort(rectangles);
     } else if (key == SELECTION_SORT_ALGORITHM) {
         return new SelectionSort(rectangles);
+    } else if (key == INSERTION_SORT_ALGORITHM) {
+        return new InsertionSort(rectangles);
     } else {
         return new SortParent();
     }
@@ -223,6 +227,33 @@ class SelectionSort extends SortParent {
 
             // record where we stopped and return
             this.lastI = i+1;
+            return this.rectanglesToSort;
+        }
+        return this.rectanglesToSort;
+    }
+}
+
+class InsertionSort extends SortParent {
+    constructor(rectanglesToSort) {
+        super();
+        this.rectanglesToSort = rectanglesToSort;
+        this.lastI = 1;
+        this.lastJ = 0;
+        this.algoName = SELECTION_SORT_ALGORITHM;
+    }
+
+    sortStep() {
+        for (let i = this.lastI; i < this.rectanglesToSort.length; i++) {
+            const key = this.rectanglesToSort[i];
+            let j = i-1;
+
+            while (j >= 0 && this.rectanglesToSort[j].value > key.value) {
+                this.rectanglesToSort[j+1] = this.rectanglesToSort[j];
+                j = j-1;
+            }
+            this.rectanglesToSort[j+1] = key;
+            
+            this.lastI = i + 1;
             return this.rectanglesToSort;
         }
         return this.rectanglesToSort;

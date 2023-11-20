@@ -24,7 +24,7 @@ function setup() {
 
     rectangleCountSliderLabel = createDiv('Rectangle Count');
     rectangleCountSliderLabel.position(10, 10);
-    rectangleCountSlider = createSlider(3, 100, rectangleCount);
+    rectangleCountSlider = createSlider(3, 250, rectangleCount);
     rectangleCountSlider.style('width', '100px');
     rectangleCountSlider.parent(rectangleCountSliderLabel);
 
@@ -44,20 +44,23 @@ function setup() {
     resetButton.style('width', '100px');
     resetButton.mousePressed(reset);
 
-    algorithmRadio = createRadio();
-    algorithmRadio.option(BUBBLE_SORT_ALGORITHM);
-    algorithmRadio.option(SELECTION_SORT_ALGORITHM);
-    algorithmRadio.style('width', '600px');
-    algorithmRadio.selected(BUBBLE_SORT_ALGORITHM);
-    algorithmRadio.position(670, 10);
+    algorithmSelectLabel = createDiv('Algorithm: ');
+    algorithmSelectLabel.position(670, 10);
+    algorithmSelect = createSelect();
+    algorithmSelect.option(BUBBLE_SORT_ALGORITHM);
+    algorithmSelect.option(SELECTION_SORT_ALGORITHM);
+    algorithmSelect.style('width', '150px');
+    algorithmSelect.selected(BUBBLE_SORT_ALGORITHM);
+    algorithmSelect.changed(reset);
+    // algorithmSelect.position(670, 10);
+    algorithmSelect.parent(algorithmSelectLabel);
 
     reset();
 }
 
 function draw() {
     // check if simulation should reset
-    if (rectangleCountSlider.value() != rectangleCount 
-        || algorithmRadio.value() != sortAlgo.algoName) {
+    if (rectangleCountSlider.value() != rectangleCount) {
         console.log("Settings changed, resetting...");
         reset();
         return;
@@ -97,7 +100,7 @@ function reset() {
 
     rectangles = generateRandomRectangles(rectangleCount, rectangleCount * 3, windowHeight-(windowHeight*.3));
 
-    sortAlgo = getSortAlgorithm(algorithmRadio.value(), rectangles);
+    sortAlgo = getSortAlgorithm(algorithmSelect.value(), rectangles);
 }
 
 function getSortAlgorithm(key, rectangles) {

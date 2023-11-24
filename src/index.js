@@ -10,6 +10,7 @@ let sortAlgo;
 const BUBBLE_SORT_ALGORITHM = "Bubble";
 const SELECTION_SORT_ALGORITHM = "Selection";
 const INSERTION_SORT_ALGORITHM = "Insertion";
+const QUICK_SORT_ALGORITHM = "Quicksort";
 
 // sorting_algorithms = {
 //     BUBBLE_SORT_ALGORITHM: BubbleSort
@@ -49,6 +50,7 @@ function setup() {
     algorithmSelect.option(BUBBLE_SORT_ALGORITHM);
     algorithmSelect.option(SELECTION_SORT_ALGORITHM);
     algorithmSelect.option(INSERTION_SORT_ALGORITHM);
+    algorithmSelect.option(QUICK_SORT_ALGORITHM);
     algorithmSelect.style('width', '150px');
     algorithmSelect.selected(BUBBLE_SORT_ALGORITHM);
     algorithmSelect.changed(reset);
@@ -110,6 +112,8 @@ function getSortAlgorithm(key, rectangles) {
         return new SelectionSort(rectangles);
     } else if (key == INSERTION_SORT_ALGORITHM) {
         return new InsertionSort(rectangles);
+    } else if (key == QUICK_SORT_ALGORITHM) {
+        return new QuickSort(rectangles);
     } else {
         return new SortParent();
     }

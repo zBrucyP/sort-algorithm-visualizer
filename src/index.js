@@ -11,6 +11,7 @@ const BUBBLE_SORT_ALGORITHM = "Bubble";
 const SELECTION_SORT_ALGORITHM = "Selection";
 const INSERTION_SORT_ALGORITHM = "Insertion";
 const QUICK_SORT_ALGORITHM = "Quicksort";
+const GNOME_SORT_ALGORITHM = "Gnomesort";
 
 // sorting_algorithms = {
 //     BUBBLE_SORT_ALGORITHM: BubbleSort
@@ -51,6 +52,7 @@ function setup() {
     algorithmSelect.option(SELECTION_SORT_ALGORITHM);
     algorithmSelect.option(INSERTION_SORT_ALGORITHM);
     algorithmSelect.option(QUICK_SORT_ALGORITHM);
+    algorithmSelect.option(GNOME_SORT_ALGORITHM);
     algorithmSelect.style('width', '150px');
     algorithmSelect.selected(BUBBLE_SORT_ALGORITHM);
     algorithmSelect.changed(reset);
@@ -114,7 +116,10 @@ function getSortAlgorithm(key, rectangles) {
         return new InsertionSort(rectangles);
     } else if (key == QUICK_SORT_ALGORITHM) {
         return new QuickSort(rectangles);
-    } else {
+    } else if (key == GNOME_SORT_ALGORITHM) {
+        return new GnomeSort(rectangles);
+    }
+    else {
         return new SortParent();
     }
 }
